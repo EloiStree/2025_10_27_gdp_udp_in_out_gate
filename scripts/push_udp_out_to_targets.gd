@@ -1,4 +1,4 @@
-extends Node
+class_name PushUdpOutToTargets extends Node
 
 #List of ipv4:port to target
 @export var list_targets_ipv4: Array[String] = ["127.0.0.1:4615"]

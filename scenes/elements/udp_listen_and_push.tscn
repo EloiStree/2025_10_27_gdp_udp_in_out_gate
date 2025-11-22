@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq30tc3ehbu6j"]
+
+[ext_resource type="PackedScene" uid="uid://c33mr53f7dy04" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scenes/elements/listen_iid.tscn" id="1_t7oly"]
+[ext_resource type="PackedScene" uid="uid://cfiflosuy5kkd" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scenes/elements/push_bytes_to_target.tscn" id="2_lmo7p"]
+
+[node name="UDP Listen And Push" type="Node"]
+
+[node name="ListenIID" parent="." instance=ExtResource("1_t7oly")]
+
+[node name="PushBytesToTarget" parent="." instance=ExtResource("2_lmo7p")]

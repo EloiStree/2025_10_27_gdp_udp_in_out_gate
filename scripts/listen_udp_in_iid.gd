@@ -1,4 +1,4 @@
-extends Node
+class_name ListenUdpInIID extends Node
 
 @export var allowed_ipv4_array=["127.0.0.1"]
 @export var allowed_port=3615
