@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://b4qa61oabixr"]
+
+[ext_resource type="Script" uid="uid://yxfimt0e7o0b" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_listen_thread_udp_byte.gd" id="1_5socv"]
+[ext_resource type="Script" uid="uid://bya86h4uvfpnl" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_listen_thread_udp_text.gd" id="2_b1g2h"]
+[ext_resource type="Script" uid="uid://bjadg744sf2of" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_push_package_udp_out_to_targets.gd" id="3_k56ni"]
+[ext_resource type="Script" uid="uid://ctvfwsy4t7fdj" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_byte_to_text_debug.gd" id="4_rn1sy"]
+[ext_resource type="Script" uid="uid://bsng4erlmh82d" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_input_field_with_reload.gd" id="5_lg882"]
+
+[node name="DemoAquarium" type="Node3D" unique_id=452249124]
+
+[node name="UdpThreadDispatcherByte" type="Node" parent="." unique_id=1670142008]
+script = ExtResource("1_5socv")
+metadata/_custom_type_script = "uid://yxfimt0e7o0b"
+
+[node name="UdpThreadDispatcherUtf8" type="Node" parent="." unique_id=938891560]
+script = ExtResource("2_b1g2h")
+metadata/_custom_type_script = "uid://bya86h4uvfpnl"
+
+[node name="PushUdpOutToTargets" type="Node" parent="." unique_id=1842172871]
+script = ExtResource("3_k56ni")
+list_targets_ipv4 = Array[String](["192.168.137.1", "192.168.1.1", "127.0.0.1"])
+metadata/_custom_type_script = "uid://bjadg744sf2of"
+
+[node name="Timer" type="Timer" parent="PushUdpOutToTargets" unique_id=187369541]
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2069609174]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=490299005]
+anchors_preset = -1
+anchor_right = 0.38500002
+anchor_bottom = 0.36100003
+offset_right = -0.52001953
+offset_bottom = 0.07197571
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=263572653]
+layout_mode = 2
+text = "b"
+
+[node name="Code To UI" type="Node" parent="CanvasLayer/VBoxContainer/Label" unique_id=33423476]
+script = ExtResource("4_rn1sy")
+
+[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=1291372816]
+layout_mode = 2
+text = "s"
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/VBoxContainer" unique_id=476166063]
+layout_mode = 2
+text = "127.0.0.1"
+
+[node name="MicroFishInputFieldSavedAtChange" type="Node" parent="CanvasLayer/VBoxContainer/LineEdit" unique_id=1311829894 node_paths=PackedStringArray("input_field")]
+script = ExtResource("5_lg882")
+input_field = NodePath("..")
+metadata/_custom_type_script = "uid://bsng4erlmh82d"
+
+[connection signal="on_message_received" from="UdpThreadDispatcherByte" to="CanvasLayer/VBoxContainer/Label/Code To UI" method="push_byte_packed_to_debug"]
+[connection signal="message_received" from="UdpThreadDispatcherUtf8" to="CanvasLayer/VBoxContainer/Label2" method="set_text"]
+[connection signal="timeout" from="PushUdpOutToTargets/Timer" to="PushUdpOutToTargets" method="push_random_text_and_byte"]
+[connection signal="on_debug_last_byte_packed" from="CanvasLayer/VBoxContainer/Label/Code To UI" to="CanvasLayer/VBoxContainer/Label" method="set_text"]
+[connection signal="on_input_field_text_changed" from="CanvasLayer/VBoxContainer/LineEdit/MicroFishInputFieldSavedAtChange" to="PushUdpOutToTargets" method="set_target_from_text"]
+[connection signal="on_input_field_text_reloaded" from="CanvasLayer/VBoxContainer/LineEdit/MicroFishInputFieldSavedAtChange" to="PushUdpOutToTargets" method="set_target_from_text"]

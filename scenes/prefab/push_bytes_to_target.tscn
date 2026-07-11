@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cfiflosuy5kkd"]
+
+[ext_resource type="Script" uid="uid://bjadg744sf2of" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_push_package_udp_out_to_targets.gd" id="1_vevri"]
+
+[node name="PushBytesToTarget" type="Node" unique_id=708063563]
+script = ExtResource("1_vevri")
+list_targets_ipv4 = Array[String](["127.0.0.1:4615"])
