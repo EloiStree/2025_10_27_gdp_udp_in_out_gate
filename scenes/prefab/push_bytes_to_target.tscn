@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfiflosuy5kkd"]
+
+[ext_resource type="Script" uid="uid://dk8hj474paps5" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/push_udp_out_to_targets.gd" id="1_hwmol"]
+
+[node name="PushBytesToTarget" type="Node"]
+script = ExtResource("1_hwmol")
+metadata/_custom_type_script = "uid://dk8hj474paps5"

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c33mr53f7dy04"]
+
+[ext_resource type="Script" uid="uid://c0h7yfgmtgdrl" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/listen_udp_in_iid.gd" id="1_8c33k"]
+
+[node name="ListenIID" type="Node"]
+script = ExtResource("1_8c33k")
+metadata/_custom_type_script = "uid://c0h7yfgmtgdrl"
