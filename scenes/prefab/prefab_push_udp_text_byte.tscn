@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bf2cwv4n6abql"]
+
+[ext_resource type="Script" uid="uid://bjadg744sf2of" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_push_package_udp_out_to_targets.gd" id="1_babdd"]
+
+[node name="PushUdpTextByte" type="Node" unique_id=1533609945]
+
+[node name="PushUdpOutToTargets" type="Node" parent="." unique_id=188355568]
+script = ExtResource("1_babdd")
+list_targets_ipv4 = Array[String](["192.168.137.1", "192.168.1.1", "127.0.0.1"])
+metadata/_custom_type_script = "uid://bjadg744sf2of"
+
+[node name="Timer" type="Timer" parent="PushUdpOutToTargets" unique_id=2096711821]
+autostart = true
+
+[connection signal="timeout" from="PushUdpOutToTargets/Timer" to="PushUdpOutToTargets" method="push_random_ssd1306_as_text"]

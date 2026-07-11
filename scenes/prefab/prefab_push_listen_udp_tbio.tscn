@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b27av0onryyfd"]
+
+[ext_resource type="PackedScene" uid="uid://dpbrc87ruwlf5" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scenes/prefab/prefab_listen_udp_text_byte.tscn" id="1_eqg87"]
+[ext_resource type="PackedScene" uid="uid://bf2cwv4n6abql" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scenes/prefab/prefab_push_udp_text_byte.tscn" id="2_qp21w"]
+
+[node name="PushListenUdpTBIO" type="Node" unique_id=104330923]
+
+[node name="ListenUdpTextByte" parent="." unique_id=455985278 instance=ExtResource("1_eqg87")]
+
+[node name="PushUdpTextByte" parent="." unique_id=1533609945 instance=ExtResource("2_qp21w")]

@@ -53,6 +53,18 @@ func push_random_integer():
 	push_bytes_to_targets(bytes_to_send, false)
 
 
+func push_random_ssd1306_as_byte_array():
+	var random_bytes = PackedByteArray()
+	# for random 128*64 bit
+	for i in range((128*64)/8):
+		random_bytes.append(randi() % 256) 
+	push_bytes_to_targets(random_bytes, false)
+
+func push_random_ssd1306_as_text():
+	var text01 = ""
+	for i in range(128*64):
+		text01 += String(STRING_RANDOM[randi() % STRING_RANDOM.length()]) # Generate random characters from STRING_RANDOM
+	push_text_to_targets(text01)
 
 func push_index_integer_to_targets(index_int32: int, value_int32: int):
 	var byte_as_int_index = integer_to_int32_bytes(index_int32)

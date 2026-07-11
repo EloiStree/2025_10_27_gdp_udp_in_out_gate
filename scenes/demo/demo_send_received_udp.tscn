@@ -53,6 +53,8 @@ script = ExtResource("5_lg882")
 input_field = NodePath("..")
 metadata/_custom_type_script = "uid://bsng4erlmh82d"
 
+[node name="Node" type="Node" parent="." unique_id=248857176]
+
 [connection signal="on_message_received" from="UdpThreadDispatcherByte" to="CanvasLayer/VBoxContainer/Label/Code To UI" method="push_byte_packed_to_debug"]
 [connection signal="message_received" from="UdpThreadDispatcherUtf8" to="CanvasLayer/VBoxContainer/Label2" method="set_text"]
 [connection signal="timeout" from="PushUdpOutToTargets/Timer" to="PushUdpOutToTargets" method="push_random_text_and_byte"]
