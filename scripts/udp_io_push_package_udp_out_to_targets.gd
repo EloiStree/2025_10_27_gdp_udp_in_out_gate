@@ -94,8 +94,13 @@ func push_iid_to_targets(index_int32: int, value_int32: int, date_ulong64: int):
 	push_bytes_to_targets(bytes_as_iid,false)
 
 
-
-
+func push_integer_pack_as_little_endian_bytes_to_targets(int_pack: PackedInt32Array):
+	var bytes_to_send = PackedByteArray()
+	for value in int_pack:
+		var byte_as_int_value = integer_to_int32_bytes(value)
+		bytes_to_send.append_array(byte_as_int_value)
+	push_bytes_to_targets(bytes_to_send,false
+)
 
 func push_integer_array_as_little_endian_bytes_to_targets(int_array: Array[int]):
 	var bytes_to_send = PackedByteArray()
