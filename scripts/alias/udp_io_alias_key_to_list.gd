@@ -26,6 +26,7 @@ func send_bytes_to_alias(alias: String, bytes: PackedByteArray) -> void:
 			var ip_port = target.split(":")
 			var ip = ip_port[0]
 			var port = int(ip_port[1])
+			print("HEEEER", alias, bytes, ip, port)
 			send_bytes_to_target(ip, port, bytes)
 
 func send_text_to_alias(alias: String, text: String) -> void:
