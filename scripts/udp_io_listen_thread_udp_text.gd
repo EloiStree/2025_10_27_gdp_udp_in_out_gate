@@ -2,13 +2,15 @@ class_name UdpIoListenThreadUdpText
 extends Node
 
 ## Emitted when a message is received (string only)
-signal message_received(text: String)
+signal on_message_received(text: String)
 ## Emitted when a message is received (with source info)
-signal message_received_with_source(text: String, source_ip: String, source_port: int)
+signal on_message_received_with_source(text: String, source_ip: String, source_port: int)
 
-@export var port_id: int = 3614
-@export var thread_priority: Thread.Priority = Thread.Priority.PRIORITY_NORMAL
-@export var time_before_start_thread: float = 0.1
+@export var _port_id: int = 3614
+@export var _thread_priority: Thread.Priority = Thread.Priority.PRIORITY_NORMAL
+@export var _time_before_start_thread: float = 0.1
+@export var _auto_start_server:bool= true
+
 
 var _received_messages: Array[String] = []
 var _received_messages_with_source: Array[Dictionary] = []
@@ -21,19 +23,30 @@ var _mutex: Mutex = null
 var _is_listening: bool = false
 
 func _ready() -> void:
-	await get_tree().create_timer(time_before_start_thread).timeout
-	_start_listening()
-
-func _start_listening() -> void:
-	print("UDP Listener: Listening text on port %d (UTF-8)" % port_id)	
-	_mutex = Mutex.new()
-	_thread_listener = Thread.new()
-	_thread_listener.start(_check_udp_message_incoming, thread_priority)
-	_is_listening = true
+	
+	if _auto_start_server:
+		await get_tree().create_timer(_time_before_start_thread).timeout
+		_start_listening()
 
 ## Call this before _ready() to change the port
 func set_port_before_start(port: int) -> void:
-	port_id = port
+	_port_id = port
+
+
+func set_listening_port_and_start_server(port:int):
+	if _is_listening:
+		printerr("You can't start an already launch thread in this code")
+		return 
+	self.port_id= port	
+	_start_listening()
+
+
+func _start_listening() -> void:
+	print("UDP Listener: Listening text on port %d (UTF-8)" % _port_id)	
+	_mutex = Mutex.new()
+	_thread_listener = Thread.new()
+	_thread_listener.start(_check_udp_message_incoming, _thread_priority)
+	_is_listening = true
 
 func _process(_delta: float) -> void:
 	_push_on_main_thread_message()
@@ -69,11 +82,11 @@ func _push_on_main_thread_message() -> void:
 	
 	while _received_messages.size() > 0:
 		_last_received = _received_messages.pop_front()
-		message_received.emit(_last_received)
+		on_message_received.emit(_last_received)
 	
 	while _received_messages_with_source.size() > 0:
 		var msg: Dictionary = _received_messages_with_source.pop_front()
-		message_received_with_source.emit(
+		on_message_received_with_source.emit(
 			msg.text,
 			msg.source_ip,
 			msg.source_port
@@ -83,10 +96,10 @@ func _push_on_main_thread_message() -> void:
 
 func _check_udp_message_incoming() -> void:
 	_udp = PacketPeerUDP.new()
-	var result: Error = _udp.bind(port_id)
+	var result: Error = _udp.bind(_port_id)
 	
 	if result != OK:
-		push_error("UDP Listener: Failed to bind to port %d - Error: %s" % [port_id, result])
+		push_error("UDP Listener: Failed to bind to port %d - Error: %s" % [_port_id, result])
 		return
 	
 	while _want_thread_alive:

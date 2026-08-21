@@ -4,9 +4,11 @@ extends Node
 signal on_message_received(data: PackedByteArray)
 signal on_message_received_with_source(data: PackedByteArray, source_ip : String, source_port : int)
 
-@export var port_id: int = 3615
-@export var thread_priority: Thread.Priority = Thread.Priority.PRIORITY_NORMAL
-@export var time_before_start_thread: float = 0.1
+@export var _port_id: int = 3615
+@export var _thread_priority: Thread.Priority = Thread.Priority.PRIORITY_NORMAL
+@export var _time_before_start_thread: float = 0.1
+@export var _auto_start_server:bool= true
+
 
 var _received_messages: Array[PackedByteArray] = []
 var _received_messages_with_source: Array[Dictionary] = []
@@ -18,20 +20,34 @@ var _has_been_killed: bool = false
 var _mutex: Mutex = null
 var _is_listening: bool = false
 
-func _ready() -> void:
-	await get_tree().create_timer(time_before_start_thread).timeout
-	_start_listening()
 
-func _start_listening() -> void:
-	print("UDP Listener: Listening bytes on port %d" % port_id)	
-	_mutex = Mutex.new()
-	_thread_listener = Thread.new()
-	_thread_listener.start(_check_udp_message_incoming, thread_priority)
-	_is_listening = true
+
+func _ready() -> void:
+	
+	if _auto_start_server:
+		await get_tree().create_timer(_time_before_start_thread).timeout
+		_start_listening()
 
 ## Call this before _ready() to change the port
 func set_port_before_start(port: int) -> void:
-	port_id = port
+	_port_id = port
+
+
+func set_listening_port_and_start_server(port:int):
+	if _is_listening:
+		printerr("You can't start an already launch thread in this code")
+		return 
+	self.port_id= port	
+	_start_listening()
+
+
+func _start_listening() -> void:
+	print("UDP Listener: Listening bytes on port %d" % _port_id)	
+	_mutex = Mutex.new()
+	_thread_listener = Thread.new()
+	_thread_listener.start(_check_udp_message_incoming, _thread_priority)
+	_is_listening = true
+
 
 func _process(_delta: float) -> void:
 	_push_on_main_thread_message()
@@ -80,10 +96,10 @@ func _push_on_main_thread_message() -> void:
 
 func _check_udp_message_incoming() -> void:
 	_udp = PacketPeerUDP.new()
-	var result: Error = _udp.bind(port_id)
+	var result: Error = _udp.bind(_port_id)
 	
 	if result != OK:
-		push_error("UDP Listener: Failed to bind to port %d - Error: %s" % [port_id, result])
+		push_error("UDP Listener: Failed to bind to port %d - Error: %s" % [_port_id, result])
 		return
 	
 	while _want_thread_alive:
@@ -107,3 +123,7 @@ func _check_udp_message_incoming() -> void:
 	if _udp:
 		_udp.close()
 		_udp = null
+
+
+func _on_to_macro_of_one_or_two_char_on_request_of_one_char_command(one_char: int) -> void:
+	pass # Replace with function body.
