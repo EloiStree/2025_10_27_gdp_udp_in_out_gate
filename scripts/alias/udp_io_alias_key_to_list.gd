@@ -81,3 +81,12 @@ func get_packed_byte_array_from_integer_index(index: int, value: int) -> PackedB
 	bytes.append((value >> 16) & 0xFF)
 	bytes.append((value >> 24) & 0xFF)
 	return bytes
+
+
+func send_text_to_all_aliases(text: String) -> void:
+	for alias in _alias_to_list_of_targets_text.keys():
+		send_text_to_alias(alias, text)	
+
+func send_bytes_to_all_aliases(bytes: PackedByteArray) -> void:
+	for alias in _alias_to_list_of_targets_bytes.keys():
+		send_bytes_to_alias(alias, bytes)
