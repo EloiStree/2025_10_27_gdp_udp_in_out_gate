@@ -1,4 +1,4 @@
-class_name UdpIoPushPackageUdpOutToTargets 
+class_name UdpIoPushPackageUdpOutToTargetsTextBytePort
 extends Node
 
 @export var list_targets_ipv4: Array[String] = [

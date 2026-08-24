@@ -7,6 +7,7 @@ signal on_message_received(text: String)
 signal on_message_received_with_source(text: String, source_ip: String, source_port: int)
 
 @export var _port_id: int = 3614
+@export var _mask_address: String = "0.0.0.0"
 @export var _thread_priority: Thread.Priority = Thread.Priority.PRIORITY_NORMAL
 @export var _time_before_start_thread: float = 0.1
 @export var _auto_start_server:bool= true
@@ -32,12 +33,22 @@ func _ready() -> void:
 func set_port_before_start(port: int) -> void:
 	_port_id = port
 
+func set_mask_address_before_start(mask_address: String) -> void:
+	_mask_address = mask_address
+
+func set_mask_address_and_port_before_start(mask_address: String, port: int) -> void:
+	_mask_address = mask_address
+	_port_id = port
+
+func set_mask_address_and_port_then_start_server(mask_address: String, port: int) -> void:
+	set_mask_address_and_port_before_start(mask_address, port)
+	_start_listening()
 
 func set_listening_port_and_start_server(port:int):
 	if _is_listening:
 		printerr("You can't start an already launch thread in this code")
 		return 
-	self.port_id= port	
+	_port_id = port
 	_start_listening()
 
 
@@ -96,7 +107,7 @@ func _push_on_main_thread_message() -> void:
 
 func _check_udp_message_incoming() -> void:
 	_udp = PacketPeerUDP.new()
-	var result: Error = _udp.bind(_port_id)
+	var result: Error = _udp.bind(_port_id, _mask_address)
 	
 	if result != OK:
 		push_error("UDP Listener: Failed to bind to port %d - Error: %s" % [_port_id, result])

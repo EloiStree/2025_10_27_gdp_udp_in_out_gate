@@ -90,3 +90,29 @@ func send_text_to_all_aliases(text: String) -> void:
 func send_bytes_to_all_aliases(bytes: PackedByteArray) -> void:
 	for alias in _alias_to_list_of_targets_bytes.keys():
 		send_bytes_to_alias(alias, bytes)
+
+
+
+func append_alias_text_target(alias: String, ip: String, port: int) -> void:
+	var target = ip + ":" + str(port)
+	if not _alias_to_list_of_targets_text.has(alias):
+		_alias_to_list_of_targets_text[alias] = [target]
+	else:
+		var is_already_in_list = false
+		for existing_target in _alias_to_list_of_targets_text[alias]:
+			if existing_target == target:
+				is_already_in_list = true
+		if not is_already_in_list:
+			_alias_to_list_of_targets_text[alias].append(target)
+
+func append_alias_bytes_target(alias: String, ip: String, port: int) -> void:
+	var target = ip + ":" + str(port)
+	if not _alias_to_list_of_targets_bytes.has(alias):
+		_alias_to_list_of_targets_bytes[alias] = [target]
+	else:
+		var is_already_in_list = false
+		for existing_target in _alias_to_list_of_targets_bytes[alias]:
+			if existing_target == target:
+				is_already_in_list = true
+		if not is_already_in_list:
+			_alias_to_list_of_targets_bytes[alias].append(target)

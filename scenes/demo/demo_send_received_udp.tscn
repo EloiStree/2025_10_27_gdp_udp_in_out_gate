@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://yxfimt0e7o0b" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_listen_thread_udp_byte.gd" id="1_5socv"]
 [ext_resource type="Script" uid="uid://bya86h4uvfpnl" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_listen_thread_udp_text.gd" id="2_b1g2h"]
-[ext_resource type="Script" uid="uid://bjadg744sf2of" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_push_package_udp_out_to_targets.gd" id="3_k56ni"]
+[ext_resource type="Script" uid="uid://bjadg744sf2of" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_push_package_udp_out_to_targets_text_byte_port.gd" id="3_k56ni"]
 [ext_resource type="Script" uid="uid://ctvfwsy4t7fdj" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_byte_to_text_debug.gd" id="4_rn1sy"]
 [ext_resource type="Script" uid="uid://bsng4erlmh82d" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_input_field_with_reload.gd" id="5_lg882"]
 

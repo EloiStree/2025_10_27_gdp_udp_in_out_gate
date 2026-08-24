@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bf2cwv4n6abql"]
 
-[ext_resource type="Script" uid="uid://bjadg744sf2of" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_push_package_udp_out_to_targets.gd" id="1_babdd"]
+[ext_resource type="Script" uid="uid://bjadg744sf2of" path="res://addons/2025_10_27_gdp_udp_in_out_gate/scripts/udp_io_push_package_udp_out_to_targets_text_byte_port.gd" id="1_babdd"]
 
 [node name="PushUdpTextByte" type="Node" unique_id=1533609945]
 
