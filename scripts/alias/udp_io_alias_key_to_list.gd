@@ -11,6 +11,9 @@ extends Node
 	"Paul": ["127.0.0.1:3614"]
 }
 
+signal on_sent_bytes(bytes:PackedByteArray)
+signal on_sent_bytes_with_alias_name(alias_name:String,bytes:PackedByteArray)
+
 func send_bytes_to_target(ip: String, port: int, bytes: PackedByteArray) -> void:
 	var udp := PacketPeerUDP.new()
 	# Bind to a free local port so the socket exists, but do not wait for any reply.
@@ -26,8 +29,9 @@ func send_bytes_to_alias(alias: String, bytes: PackedByteArray) -> void:
 			var ip_port = target.split(":")
 			var ip = ip_port[0]
 			var port = int(ip_port[1])
-			print("HEEEER", alias, bytes, ip, port)
 			send_bytes_to_target(ip, port, bytes)
+		on_sent_bytes.emit(bytes)
+		on_sent_bytes_with_alias_name.emit(alias,bytes)
 
 func send_text_to_alias(alias: String, text: String) -> void:
 	if _alias_to_list_of_targets_text.has(alias):

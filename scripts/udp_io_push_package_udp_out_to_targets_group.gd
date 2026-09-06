@@ -10,6 +10,7 @@ extends Node
 	"192.168.1.1:3614"
 	]
 
+signal on_sent_bytes(bytes:PackedByteArray)
 
 func clear_text_targets():
 	list_targets_ipv4_for_text.clear()
@@ -53,6 +54,7 @@ func push_bytes_to_targets(bytes_to_send: PackedByteArray, bool_is_text: bool = 
 		if is_valide_ipv4_address(address):
 			udp_socket.set_dest_address(address, port)
 			udp_socket.put_packet(bytes_to_send)
+	on_sent_bytes.emit(bytes_to_send)
 
 func is_valide_ipv4_address(ipv4_address: String) -> bool:
 	var regex = RegEx.new()
