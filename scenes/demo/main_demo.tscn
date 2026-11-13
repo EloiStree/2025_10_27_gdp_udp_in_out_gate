@@ -4,10 +4,10 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_ss3vc"]
 
-[node name="MainDemo" type="Node3D"]
+[node name="MainDemo" type="Node3D" unique_id=305756189]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=385009484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.50117445, 0)
 mesh = SubResource("BoxMesh_ss3vc")
 
-[node name="UDP Listen And Push" parent="." instance=ExtResource("1_tpjrs")]
+[node name="UDP Listen And Push" parent="." unique_id=931515484 instance=ExtResource("1_tpjrs")]
