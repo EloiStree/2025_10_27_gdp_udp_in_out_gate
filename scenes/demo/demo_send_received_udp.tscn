@@ -33,14 +33,14 @@ anchor_bottom = 0.36100003
 offset_right = -0.52001953
 offset_bottom = 0.07197571
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=263572653]
+[node name="Label Byte Received" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=263572653]
 layout_mode = 2
 text = "b"
 
-[node name="Code To UI" type="Node" parent="CanvasLayer/VBoxContainer/Label" unique_id=33423476]
+[node name="Code To UI" type="Node" parent="CanvasLayer/VBoxContainer/Label Byte Received" unique_id=33423476]
 script = ExtResource("4_rn1sy")
 
-[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=1291372816]
+[node name="Label Text Received" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=1291372816]
 layout_mode = 2
 text = "s"
 
@@ -48,15 +48,14 @@ text = "s"
 layout_mode = 2
 text = "127.0.0.1"
 
-[node name="MicroFishInputFieldSavedAtChange" type="Node" parent="CanvasLayer/VBoxContainer/LineEdit" unique_id=1311829894 node_paths=PackedStringArray("input_field")]
+[node name="UdpInputFieldSavedAtChange" type="Node" parent="CanvasLayer/VBoxContainer/LineEdit" unique_id=1311829894 node_paths=PackedStringArray("input_field")]
 script = ExtResource("5_lg882")
 input_field = NodePath("..")
 metadata/_custom_type_script = "uid://bsng4erlmh82d"
 
-[node name="Node" type="Node" parent="." unique_id=248857176]
-
-[connection signal="on_message_received" from="UdpThreadDispatcherByte" to="CanvasLayer/VBoxContainer/Label/Code To UI" method="push_byte_packed_to_debug"]
+[connection signal="on_message_received" from="UdpThreadDispatcherByte" to="CanvasLayer/VBoxContainer/Label Byte Received/Code To UI" method="push_byte_packed_to_debug"]
+[connection signal="on_message_received" from="UdpThreadDispatcherUtf8" to="CanvasLayer/VBoxContainer/Label Text Received" method="set_text"]
 [connection signal="timeout" from="PushUdpOutToTargets/Timer" to="PushUdpOutToTargets" method="push_random_text_and_byte"]
-[connection signal="on_debug_last_byte_packed" from="CanvasLayer/VBoxContainer/Label/Code To UI" to="CanvasLayer/VBoxContainer/Label" method="set_text"]
-[connection signal="on_input_field_text_changed" from="CanvasLayer/VBoxContainer/LineEdit/MicroFishInputFieldSavedAtChange" to="PushUdpOutToTargets" method="set_target_from_text"]
-[connection signal="on_input_field_text_reloaded" from="CanvasLayer/VBoxContainer/LineEdit/MicroFishInputFieldSavedAtChange" to="PushUdpOutToTargets" method="set_target_from_text"]
+[connection signal="on_debug_last_byte_packed" from="CanvasLayer/VBoxContainer/Label Byte Received/Code To UI" to="CanvasLayer/VBoxContainer/Label Byte Received" method="set_text"]
+[connection signal="on_input_field_text_changed" from="CanvasLayer/VBoxContainer/LineEdit/UdpInputFieldSavedAtChange" to="PushUdpOutToTargets" method="set_target_from_text"]
+[connection signal="on_input_field_text_reloaded" from="CanvasLayer/VBoxContainer/LineEdit/UdpInputFieldSavedAtChange" to="PushUdpOutToTargets" method="set_target_from_text"]

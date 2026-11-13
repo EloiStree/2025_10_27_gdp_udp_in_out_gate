@@ -1,7 +1,6 @@
 
-class_name MicroFishInputFieldSavedAtChange
+class_name UdpInputFieldSavedAtChange
 extends Node
-
 
 signal on_input_field_text_changed(new_text: String)
 signal on_input_field_text_reloaded(new_text: String)
